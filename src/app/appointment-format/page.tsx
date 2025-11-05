@@ -2,13 +2,13 @@
 
 import Footer from "@/components/ui/footer";
 import Header from "@/components/ui/header";
-import GpAddressForm from "@/components/gpAddressForm";
+import AppointmentFormatForm from "@/components/appointmentFormatForm";
 
-export default function Home() {
+export default function AppointmentFormat() {
   return (
     <>
       <Header />
-      <GpAddressForm />
+      <AppointmentFormatForm />
       <Footer />
     </>
   );
