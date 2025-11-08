@@ -1,15 +1,11 @@
 "use client";
 
-import Footer from "@/components/ui/footer";
-import Header from "@/components/ui/header";
 import SuccessLogo from "@/components/ui/icons/Frame 1430102066.svg";
 import Image from "next/image";
 
 export default function Confirmation() {
   return (
     <>
-      <Header />
-
       <div className="py-12 flex flex-col items-center gap-8">
         <Image className="" src={SuccessLogo} alt="" />
         <h2 className="text-2xl font-bold">Booking Confirmed!</h2>
@@ -39,8 +35,6 @@ export default function Confirmation() {
           Return to Home
         </button>
       </div>
-
-      <Footer />
     </>
   );
 }
