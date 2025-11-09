@@ -4,10 +4,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { bookingSchema, type BookingSchema } from "@/schema";
-import GpAddressForm from "@/components/gpAddressForm";
-import AppointmentFormatForm from "@/components/appointmentFormatForm";
-import Confirmation from "@/components/confirmation";
-import ProgressBar from "@/components/ui/progressBar";
+import GpAddressForm from "@/components/GpAddressForm";
+import AppointmentFormatForm from "@/components/AppointmentFormatForm";
+import Confirmation from "@/components/Confirmation";
+import ProgressBar from "@/components/ui/ProgressBar";
 
 const steps = [<GpAddressForm />, <AppointmentFormatForm />, <Confirmation />];
 
