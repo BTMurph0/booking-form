@@ -3,7 +3,7 @@
 A small Next.js app implementing a GP appointment booking form. Demonstrates a multi-step form built with react-hook-form, Zod validation, and Tailwind CSS for styling. State is handled in-component / persisted with localStorage or form context (Zustand is no longer used). The project uses the Next.js App Router (Pages Router is not used).
 
 ## Link to hosted version in absence of screenshots and video
-https://booking-form-3xmngnwnu-barrys-projects-7dac567a.vercel.app/
+https://booking-form-tau.vercel.app/
 
 ## Features
 - Multi-step GP appointment booking flow
