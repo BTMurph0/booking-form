@@ -1,18 +1,13 @@
 "use client";
 
-import { bookingSchema } from "@/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler, useFormContext } from "react-hook-form";
-import { z } from "zod";
-
-const appointmentFormatSchema = bookingSchema.pick({
-  appointmentFormat: true,
-});
-
-type AppointmentFormatSchema = z.infer<typeof appointmentFormatSchema>;
+import { useFormContext } from "react-hook-form";
+import type { BookingSchema } from "@/schema";
 
 export default function AppointmentFormatForm() {
-  const { register } = useFormContext<AppointmentFormatSchema>();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<BookingSchema>();
 
   return (
     <div className="pt-24 flex flex-col items-center gap-8">
@@ -51,6 +46,9 @@ export default function AppointmentFormatForm() {
           />
         </label>
       </div>
+      {errors.appointmentFormat && (
+        <p className="text-red-500">{errors.appointmentFormat.message}</p>
+      )}
     </div>
   );
 }

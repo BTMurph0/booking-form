@@ -1,20 +1,13 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-
-import { z } from "zod";
-import { bookingSchema } from "@/schema";
-
-const gpAddressSchema = bookingSchema.pick({
-  gpName: true,
-  email: true,
-  contactNumber: true,
-});
-
-type GpAddressSchema = z.infer<typeof gpAddressSchema>;
+import type { BookingSchema } from "@/schema";
 
 export default function GpAddressForm() {
-  const { register } = useFormContext<GpAddressSchema>();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<BookingSchema>();
 
   return (
     <div className="pt-24 flex flex-col items-center gap-8">
@@ -25,14 +18,23 @@ export default function GpAddressForm() {
         <div className="flex flex-col border-1 rounded-md p-4">
           <label>GP Name</label>
           <input {...register("gpName")} placeholder="GP Name" />
+          {errors.gpName && (
+            <p className="text-red-500">{errors.gpName.message}</p>
+          )}
         </div>
         <div className="flex flex-col border-1 rounded-md p-4">
           <label>Email</label>
           <input {...register("email")} placeholder="Email" />
+          {errors.email && (
+            <p className="text-red-500">{errors.email.message}</p>
+          )}
         </div>
         <div className="flex flex-col border-1 rounded-md p-4">
           <label>Contact Number</label>
           <input {...register("contactNumber")} placeholder="Contact number" />
+          {errors.contactNumber && (
+            <p className="text-red-500">{errors.contactNumber.message}</p>
+          )}
         </div>
       </div>
     </div>
