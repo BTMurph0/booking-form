@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="md:flex hidden justify-center fixed bottom-0 w-full h-16">
+    <footer className="md:flex hidden justify-center w-full h-16 mt-auto bg-white">
       <Image src={Spectrum} alt="Vector Icon" />
     </footer>
   );
