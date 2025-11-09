@@ -27,7 +27,7 @@ export default function Home() {
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
-            className="flex flex-col gap-6 w-xl"
+            className="flex flex-col gap-6"
           >
             {steps[step]}
             {step < steps.length - 1 && (
