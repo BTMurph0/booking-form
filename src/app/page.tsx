@@ -1,34 +1,63 @@
 "use client";
 
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { bookingSchema, type BookingSchema } from "@/schema";
+import GpAddressForm from "@/components/gpAddressForm";
 import AppointmentFormatForm from "@/components/appointmentFormatForm";
 import Confirmation from "@/components/confirmation";
-import GpAddressForm from "@/components/gpAddressForm";
-import { useForm, FormProvider } from "react-hook-form";
-import { useState } from "react";
+import ProgressBar from "@/components/ui/progressBar";
 
 const steps = [<GpAddressForm />, <AppointmentFormatForm />, <Confirmation />];
 
 export default function Home() {
-  const methods = useForm();
   const [step, setStep] = useState(0);
-  const onSubmit = (data: any) => {
-    setStep(step + 1);
-    console.log(data);
+
+  const [formData, setFormData] = useState<Partial<BookingSchema>>({});
+
+  const methods = useForm<BookingSchema>({
+    resolver: zodResolver(bookingSchema),
+    mode: "onSubmit",
+    defaultValues: {
+      gpName: "",
+      email: "",
+      contactNumber: "",
+      appointmentFormat: undefined,
+    },
+  });
+
+  const handleNext = async () => {
+    let stepFields: (keyof BookingSchema)[] = [];
+    if (step === 0) stepFields = ["gpName", "email", "contactNumber"];
+    if (step === 1) stepFields = ["appointmentFormat"];
+
+    const valid = await methods.trigger(stepFields);
+    if (!valid) return;
+
+    const updatedData = { ...formData, ...methods.getValues() };
+    setFormData(updatedData);
+
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+      console.log("Step data:", updatedData);
+    } else {
+      console.log("Final data:", updatedData);
+    }
   };
 
   const handlePrevious = () => {
     setStep(step - 1);
   };
 
-  const { register, reset } = methods;
   return (
     <>
       <div className="flex flex-col items-center">
+        <div className="w-full max-w-3xl px-4">
+          <ProgressBar step={step} totalSteps={steps.length} />
+        </div>
         <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className="flex flex-col gap-6"
-          >
+          <form className="flex flex-col gap-6">
             {steps[step]}
             {step < steps.length - 1 && (
               <div className="flex gap-4 justify-end">
@@ -40,7 +69,8 @@ export default function Home() {
                   Previous
                 </button>
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={handleNext}
                   className="cursor-pointer rounded-lg p-4 bg-[#604BFF] text-white"
                 >
                   Continue

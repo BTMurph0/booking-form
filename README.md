@@ -1,13 +1,13 @@
 # Appointment Booking App (GP booking form)
 
-A small Next.js app that provides a GP appointment booking form. It demonstrates a multi-step form built with react-hook-form, Zod validation, Tailwind CSS for styling, and a simple client-side store for persisting form state.
+A small Next.js app implementing a GP appointment booking form. Demonstrates a multi-step form built with react-hook-form, Zod validation, and Tailwind CSS for styling. State is handled in-component / persisted with localStorage or form context (Zustand is no longer used). The project uses the Next.js App Router (Pages Router is not used).
 
 ## Features
 - Multi-step GP appointment booking flow
 - Validation with Zod
 - react-hook-form for form handling
 - Tailwind CSS for styling
-- Client-side state (Zustand) to persist form values between steps
+- Client-side state persisted via localStorage / form context (no Zustand)
 - Navigation using Next.js App Router
 
 ## Tech stack
@@ -18,7 +18,6 @@ A small Next.js app that provides a GP appointment booking form. It demonstrates
 - react-hook-form
 - zod
 - @hookform/resolvers
-- Zustand (simple store)
 
 ## Getting started
 
@@ -48,11 +47,16 @@ npm start
 ```
 
 ## Project layout
-- app/ — Next.js app routes and pages
-- src/components/ — React components (forms, inputs)
+- app/ — Next.js App Router routes and pages
+- src/components/ — React components and form UI
 - src/schema.ts — Zod schemas used for validation
 - src/app/globals.css — global styles (Tailwind entry points)
-- src/app/store.ts — client store for booking data
+- (If present) src/app/store.ts — legacy store removed in favor of form context / localStorage (check code)
+
+## Form/state notes
+- Forms use react-hook-form + zod for validation.
+- State is kept in components and persisted to localStorage or passed via form context/settings when navigating between steps. There is no Zustand store in this version.
+- When navigating back to previous steps, forms pull initial values from your chosen persistence (defaultValues / reset from localStorage or context).
 
 ## Common troubleshooting
 - If TypeScript complains "Cannot find module '@hookform/resolvers/zod'":
@@ -72,10 +76,15 @@ Restart the TypeScript server in VS Code (Cmd/Ctrl+Shift+P → "TypeScript: Rest
 @tailwind utilities;
 ```
 
-- Zod enums: use readonly tuples and option keys supported by Zod:
+- Zod enums: use readonly tuples and supported option keys:
 ```ts
 z.enum(["video", "audio"] as const, { error: "Choose a format" })
 ```
 
+- Browser autofill: modern browsers may autofill inputs from saved credentials. Use explicit `autoComplete` attributes and/or a hidden autofill trap input to avoid unexpected prefilled values.
+
 ## Notes
-This app is intentionally small and focused on demonstrating form validation and navigation for a GP appointment booking flow. 
+This app is intentionally small and focused on demonstrating form validation and navigation for a GP appointment booking flow. Extend fields, add server-side submission, or integrate real availability and authentication as needed.
+
+## License
+Check the `license` field in package.json or the LICENSE file in the repo root. If you don't want an open-source license, set `"license": "UNLICENSED"` and `"private": true` in package.json.
